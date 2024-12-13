@@ -21,7 +21,7 @@ jobs:
       run: |
         set -x  # Enable command tracing
         echo "Logging in using Managed Identity..."
-        UAMI_CLIENT_ID="39ccf470-8b8a-414e-934f-277f7c6e7ba4"
+        UAMI_CLIENT_ID="ffaf7d28-91ef-4732-9d02-4e6c733b98cf"
         az login --identity --username $UAMI_CLIENT_ID --debug  # Adding debug for more verbose output
 
     - name: Fetch and Delete Manifests
