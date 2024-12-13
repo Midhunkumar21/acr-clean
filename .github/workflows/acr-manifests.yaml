@@ -18,7 +18,7 @@ jobs:
         az --version  # Confirm installation
 
     - name: Azure login      
-      uses: azure/login@v1     
+      uses: azure/login@v2    
       with: 
         auth-type: IDENTITY
         client-id: 39ccf470-8b8a-414e-934f-277f7c6e7ba4      
