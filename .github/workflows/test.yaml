@@ -18,7 +18,8 @@ jobs:
 
     - name: Log in using User Assigned Managed Identity
       run: |
-        az login --identity --username 39ccf470-8b8a-414e-934f-277f7c6e7ba4
+        UAMI_CLIENT_ID="39ccf470-8b8a-414e-934f-277f7c6e7ba4"
+        az login --identity --username $UAMI_CLIENT_ID
 
     - name: Fetch and Delete Manifests
       run: |
@@ -37,3 +38,4 @@ jobs:
           echo "Deleting manifest: $DIGEST"
           az acr manifest delete -r $ACR_NAME -n "$REPO_NAME@$DIGEST" --yes
         done
+
