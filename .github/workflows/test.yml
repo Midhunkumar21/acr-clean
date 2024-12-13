@@ -16,13 +16,16 @@ jobs:
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         az --version  # Confirm installation
 
-     - name: Login to Azure # Azure Login with User Managed Identity
-       uses: azure/login@v2
-       with:
-            auth-type: Identity
-            client-id: 39ccf470-8b8a-414e-934f-277f7c6e7ba4
-            tenant-id: 06698be3-7107-4e65-ac59-1967f7c7c43e
-            subscription-id: 1fe9963c-1fe2-4dcc-83a7-b49978ffb277
+    #  - name: Login to Azure # Azure Login with User Managed Identity
+    #    uses: azure/login@v2
+    #    with:
+    #         auth-type: Identity
+    #         client-id: 39ccf470-8b8a-414e-934f-277f7c6e7ba4
+    #         tenant-id: 06698be3-7107-4e65-ac59-1967f7c7c43e
+    #         subscription-id: 1fe9963c-1fe2-4dcc-83a7-b49978ffb277
+    - name: Login to Azure
+      run: |
+        az login --use-device-code
 
     - name: Fetch and Delete Manifests
       run: |
