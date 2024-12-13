@@ -1,0 +1,37 @@
+name: Delete Old ACR Manifests
+
+on:
+  workflow_dispatch:  # Trigger manually
+
+jobs:
+  delete-acr-images:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/setup-azurecli@v1
+
+    - name: Log in using User Assigned Managed Identity
+      run: |
+        az login --identity --username 39ccf470-8b8a-414e-934f-277f7c6e7ba4
+
+    - name: Fetch and Delete Manifests
+      run: |
+        ACR_NAME="trumiotest"
+        REPO_NAME="hello-world"
+
+        # List manifests and skip the latest 2
+        MANIFESTS=$(az acr manifest list-metadata -r $ACR_NAME -n $REPO_NAME --orderby time_desc \
+          --query "[?contains(join(',', tags), 'u')]" -o tsv | grep digest | awk -F '": "' '{print $2}' | sed 's/",$//' | awk 'NR>2')
+
+        echo "Manifests to delete:"
+        echo "$MANIFESTS"
+
+        # Delete each manifest
+        for DIGEST in $MANIFESTS; do
+          echo "Deleting manifest: $DIGEST"
+          az acr manifest delete -r $ACR_NAME -n "$REPO_NAME@$DIGEST" --yes
+        done
