@@ -3,11 +3,13 @@ name: Delete Old ACR Manifests
 on:
   workflow_dispatch:  # Trigger manually
 
+permissions:
+  id-token: write  # Required for Azure login
+  contents: read   # Minimal permission for repository access
+
 jobs:
   delete-acr-images:
     runs-on: ubuntu-latest
-    permissions:
-     contents: write
 
     steps:
     - name: Checkout repository
@@ -46,3 +48,4 @@ jobs:
           echo "Deleting manifest: $DIGEST"
           az acr manifest delete -r $ACR_NAME -n "$REPO_NAME@$DIGEST" --yes --debug  # Adding debug
         done
+
