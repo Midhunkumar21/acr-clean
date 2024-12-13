@@ -1,7 +1,6 @@
 name: Delete Old ACR Manifests
 
-on:
-  workflow_dispatch:  # Trigger manually
+on: [workflow_dispatch]
 
 jobs:
   delete-acr-images:
