@@ -1,4 +1,4 @@
-name: Delete Old ACR Manifests
+name: Delete Old ACR Manifest
 
 on: [workflow_dispatch]
 
