@@ -13,16 +13,19 @@ jobs:
 
     - name: Set up Azure CLI
       run: |
-        # Install Azure CLI
+        echo "Installing Azure CLI..."
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        az --version  # Confirm installation
 
     - name: Log in using User Assigned Managed Identity
       run: |
+        echo "Logging in using Managed Identity..."
         UAMI_CLIENT_ID="39ccf470-8b8a-414e-934f-277f7c6e7ba4"
-        az login --identity --username $UAMI_CLIENT_ID
+        az login --identity --username $UAMI_CLIENT_ID --debug  # Adding debug for more verbose output
 
     - name: Fetch and Delete Manifests
       run: |
+        echo "Fetching manifests to delete..."
         ACR_NAME="trumiotest"
         REPO_NAME="hello-world"
 
@@ -36,6 +39,5 @@ jobs:
         # Delete each manifest
         for DIGEST in $MANIFESTS; do
           echo "Deleting manifest: $DIGEST"
-          az acr manifest delete -r $ACR_NAME -n "$REPO_NAME@$DIGEST" --yes
+          az acr manifest delete -r $ACR_NAME -n "$REPO_NAME@$DIGEST" --yes --debug  # Adding debug
         done
-
