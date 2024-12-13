@@ -25,7 +25,7 @@ jobs:
     #         subscription-id: 1fe9963c-1fe2-4dcc-83a7-b49978ffb277
     - name: Login -to- Azure
       run: |
-        az login --use-device-code
+        az login --tenant 06698be3-7107-4e65-ac59-1967f7c7c43e
 
     - name: Fetch and Delete Manifests
       run: |
